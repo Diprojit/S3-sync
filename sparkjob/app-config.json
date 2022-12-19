@@ -1,0 +1,66 @@
+
+{
+ "ingest-actives":{
+     "source":{
+         "data-location":"s3://diprojit-landingzone-o7/dataset/actives.parquet",
+         "file-format":"parquet"
+         },
+     "destination":{
+         "data-location":"s3://diprojit-rawzone-07/Active/",
+         "file-format":"parquet"
+         }
+     },
+    
+ "masked-actives":{
+     "source":{
+         "data-location":"s3://diprojit-rawzone-07/Active/",
+         "file-format":"parquet"
+         },
+     "destination":{
+         "data-location":"s3://diprojit-statgingzone-07/Active/",
+         "file-format":"parquet"
+         },
+     "masking-cols":["advertising_id","user_id"],
+     "transformation-cols":{
+         "user_latitude":"DecimalType,7",
+         "user_longitude":"DecimalType,7",
+         "location_source":"ArrayType-StringType"
+         },
+     "partition-cols":["month","date"]
+     },
+ 
+ "ingest-viewership":{
+     "source":{
+         "data-location":"s3://diprojit-landingzone-o7/dataset/viewership.parquet",
+         "file-format":"parquet"
+         },
+     "destination":{
+         "data-location":"s3://diprojit-rawzone-07/Viewership/",
+         "file-format":"parquet"
+         }
+     },
+ 
+ "masked-viewership":{
+     "source":{
+         "data-location":"s3://diprojit-rawzone-07/Viewership/",
+         "file-format":"parquet"
+         },
+     "destination":{
+         "data-location":"s3://diprojit-statgingzone-07/Viewership/",
+         "file-format":"parquet"
+         },
+     "masking-cols":["advertising_id"],
+     "transformation-cols":{
+         "user_lat":"DecimalType,7",
+		"user_long":"DecimalType,7",
+		"location_source":"ArrayType-StringType"
+         },
+     "partition-cols":["month","date"]
+     },
+ 
+ "lookup-dataset":{
+        "data-location":"",
+        "pii-cols":["advertising_id","user_id"]
+    }
+ 
+ }
